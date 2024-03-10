@@ -1,0 +1,9 @@
+<resources>
+    <string name="text_app_title">0x800</string>
+    <string name="text_score_title">Score</string>
+    <string name="text_highscore_title">Best</string>
+    <string name="button_new_game_title">New game</string>
+    <string name="text_game_description">Join the numbers and\nget to the **0x800 title!**</string>
+    <string name="text_game_over">Game over!</string>
+    <string name="text_game_win">You win!</string>
+</resources>

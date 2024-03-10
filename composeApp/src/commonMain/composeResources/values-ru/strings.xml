@@ -1,0 +1,8 @@
+<resources>
+    <string name="text_score_title">Очки</string>
+    <string name="text_highscore_title">Лучшие</string>
+    <string name="button_new_game_title">Новая игра</string>
+    <string name="text_game_description">Соединяйте плитки, чтобы\nполучить число **0x800!**</string>
+    <string name="text_game_over">Потрачено!</string>
+    <string name="text_game_win">Вы победили!</string>
+</resources>
