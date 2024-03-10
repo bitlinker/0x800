@@ -33,6 +33,8 @@ import game0x800.composeapp.generated.resources.text_game_win
 import game0x800.composeapp.generated.resources.text_highscore_title
 import game0x800.composeapp.generated.resources.text_score_title
 import me.bitlinker.compose800.model.GameState
+import me.bitlinker.compose800.ui.modifiers.listenDirectionDrags
+import me.bitlinker.compose800.ui.modifiers.listenDirectionKeys
 import me.bitlinker.compose800.ui.theme.Dimens
 import me.bitlinker.compose800.ui.theme.TextStyles
 import me.bitlinker.compose800.ui.theme.ThemeColors
@@ -46,7 +48,15 @@ import org.jetbrains.compose.resources.stringResource
 
 @Composable
 internal fun GameScreen(state: GameViewState, dispatcher: (GameAction) -> Unit) {
-    BoxWithConstraints {
+    BoxWithConstraints(
+        modifier = Modifier
+            .listenDirectionDrags { dispatcher(GameAction.Move(it)) }
+            .listenDirectionKeys { dispatcher(GameAction.Move(it)) }
+            .fillMaxSize()
+            .background(ThemeColors.current.frameBackground)
+            .safeDrawingPadding()
+            .padding(Dimens.paddingLarge)
+    ) {
         if (maxHeight >= maxWidth) {
             PortraitScreen(state, dispatcher)
         } else {
@@ -60,19 +70,12 @@ internal fun GameScreen(state: GameViewState, dispatcher: (GameAction) -> Unit) 
 private fun PortraitScreen(state: GameViewState, dispatcher: (GameAction) -> Unit) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier
-            .fillMaxSize()
-            .background(ThemeColors.current.frameBackground)
-            .safeDrawingPadding()
-            .padding(Dimens.paddingLarge)
+        modifier = Modifier.fillMaxSize()
     ) {
         Spacer(Modifier.weight(1F))
         PortraitHeader(state.score, dispatcher)
         Spacer(Modifier.height(Dimens.paddingLarge))
-        GameFieldView(
-            state.field,
-            dispatcher,
-        )
+        GameFieldView(state.field)
         Spacer(Modifier.weight(1F))
     }
 }
@@ -82,11 +85,7 @@ private fun LandscapeScreen(state: GameViewState, dispatcher: (GameAction) -> Un
     Row(
         verticalAlignment = Top,
         horizontalArrangement = Arrangement.SpaceEvenly,
-        modifier = Modifier
-            .fillMaxSize()
-            .background(ThemeColors.current.frameBackground)
-            .safeDrawingPadding()
-            .padding(Dimens.paddingLarge)
+        modifier = Modifier.fillMaxSize(),
     ) {
         LandscapeHeader(state, dispatcher)
         Spacer(modifier = Modifier.width(Dimens.paddingLarge))
@@ -94,10 +93,7 @@ private fun LandscapeScreen(state: GameViewState, dispatcher: (GameAction) -> Un
             contentAlignment = Alignment.Center,
             modifier = Modifier.fillMaxHeight()
         ) {
-            GameFieldView(
-                field = state.field,
-                dispatcher = dispatcher,
-            )
+            GameFieldView(field = state.field)
         }
     }
 }

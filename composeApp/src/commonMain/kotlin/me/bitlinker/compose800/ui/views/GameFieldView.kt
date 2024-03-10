@@ -23,18 +23,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.toSize
 import me.bitlinker.compose800.model.Cell
 import me.bitlinker.compose800.model.CellId
-import me.bitlinker.compose800.ui.GameAction
 import me.bitlinker.compose800.ui.GameViewState
-import me.bitlinker.compose800.ui.modifiers.listenDirectionDrags
-import me.bitlinker.compose800.ui.modifiers.listenDirectionKeys
 import me.bitlinker.compose800.ui.theme.Dimens
 import me.bitlinker.compose800.ui.theme.ThemeColors
 
 @Composable
-internal fun GameFieldView(
-    field: GameViewState.Field,
-    dispatcher: (GameAction) -> Unit,
-) {
+internal fun GameFieldView(field: GameViewState.Field) {
     Box(
         modifier = Modifier
             .aspectRatio(field.size.width.toFloat() / field.size.height)
@@ -42,8 +36,6 @@ internal fun GameFieldView(
                 color = ThemeColors.current.frameBody,
                 shape = RoundedCornerShape(Dimens.backgroundRadius)
             )
-            .listenDirectionDrags { dispatcher(GameAction.Move(it)) }
-            .listenDirectionKeys { dispatcher(GameAction.Move(it)) }
             .padding(Dimens.cellBorder)
 
     ) {
