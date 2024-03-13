@@ -1,4 +1,4 @@
-name: Android CI
+name: Android build
 
 on:
   push:
@@ -23,4 +23,18 @@ jobs:
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
     - name: Build with Gradle
-      run: ./gradlew build
+      run: ./gradlew test assembleRelease bundleRelease
+
+    - name: Upload APK
+      uses: actions/upload-artifact@v4.3.1
+      with:
+        name: ${{ env.date_today }} - ${{ env.repository_name }} - release unsigned APK
+        path: composeApp/build/outputs/apk/release/*.apk
+        
+    - name: Upload ABB
+      uses: actions/upload-artifact@v4.3.1
+      with:
+        name: ${{ env.date_today }} - ${{ env.repository_name }} - release unsigned ABB
+        path: composeApp/build/outputs/bundle/release/*.abb
+
+      
