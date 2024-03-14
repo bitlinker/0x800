@@ -1,10 +1,9 @@
-name: Android build
+name: Release Android artifacts
 
 on:
   push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+    branches: [ "release" ]
+  workflow_dispatch:
 
 jobs:
   build:
