@@ -1,4 +1,4 @@
-name: Deploy release to pages
+name: Deploy JS release artifacts to pages
 
 on:  
   push:
@@ -46,7 +46,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: 'composeApp\build\dist\js\productionExecutable'
+          path: 'composeApp/build/dist/js/productionExecutable'
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
