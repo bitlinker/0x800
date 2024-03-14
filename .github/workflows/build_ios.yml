@@ -1,10 +1,14 @@
-name: Build all platfroms
+name: Build iOS
 
 on:
   push:
     branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
+
+concurrency:
+  group: "ios"
+  cancel-in-progress: true
 
 jobs:
   build:
@@ -20,10 +24,6 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
           cache: gradle
-      - name: Grant execute permission for gradlew
-        run: chmod +x gradlew
-      - name: Build with Gradle
-        run: ./gradlew build assembleRelease jsBrowserProductionWebpack package
       - name: Set Default Scheme
         run: |
           cd iosApp
@@ -43,3 +43,4 @@ jobs:
           if [ "`ls -A | grep -i \\.xcworkspace\$`" ]; then filetype_parameter="workspace" && file_to_build="`ls -A | grep -i \\.xcworkspace\$`"; else filetype_parameter="project" && file_to_build="`ls -A | grep -i \\.xcodeproj\$`"; fi
           file_to_build=`echo $file_to_build | awk '{$1=$1;print}'`
           xcodebuild build-for-testing -scheme "$scheme" -"$filetype_parameter" "$file_to_build" -destination "platform=$platform,name=$device"
+		  
