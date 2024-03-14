@@ -27,13 +27,15 @@ jobs:
     - name: Upload APK
       uses: actions/upload-artifact@v4.3.1
       with:
-        name: ${{ env.date_today }} - ${{ env.repository_name }} - release unsigned APK
+        name: release unsigned APK
         path: composeApp/build/outputs/apk/release/*.apk
+        if-no-files-found: error
         
-    - name: Upload ABB
+    - name: Upload AAB
       uses: actions/upload-artifact@v4.3.1
       with:
-        name: ${{ env.date_today }} - ${{ env.repository_name }} - release unsigned ABB
-        path: composeApp/build/outputs/bundle/release/*.abb
+        name: release unsigned AAB
+        path: composeApp/build/outputs/bundle/release/*.aab
+        if-no-files-found: error
 
       
