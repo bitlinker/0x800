@@ -1,6 +1,7 @@
 # 0x800 is 2048 for programmers
 
-[![Build all platfroms](https://github.com/bitlinker/0x800/actions/workflows/build.yml/badge.svg)](https://github.com/bitlinker/0x800/actions/workflows/build.yml)
+[![Build Android, Desktop & JS](https://github.com/bitlinker/0x800/actions/workflows/build_linux.yml/badge.svg)](https://github.com/bitlinker/0x800/actions/workflows/build_linux.yml)
+[![Build iOS](https://github.com/bitlinker/0x800/actions/workflows/build_ios.yml/badge.svg)](https://github.com/bitlinker/0x800/actions/workflows/build_ios.yml)
 
 Written in Kotlin Native & Compose Multiplatform just for fun. Supports Android, iOS, Mac OS, Windows, Linux and browser. Enjoy!
 
