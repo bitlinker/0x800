@@ -15,7 +15,7 @@ kotlin {
         implementation(libs.kotlinx.coroutines.android)
         implementation(libs.napier)
         implementation(libs.essenty.stateKeeper)
-        implementation(project(":composeApp")) // TODO: project acessor
+        implementation(projects.composeApp)
     }
 
     target {
@@ -35,7 +35,7 @@ android {
 
         applicationId = "me.bitlinker.compose800.androidApp"
         versionCode = 3
-        versionName = "1.0.2"
+        versionName = projects.composeApp.version
     }
 
     compileOptions {

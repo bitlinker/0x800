@@ -5,6 +5,8 @@ import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpackConfig
 
+version = "1.0.3"
+
 plugins {
     alias(libs.plugins.multiplatform)
     alias(libs.plugins.compose)
@@ -14,7 +16,7 @@ plugins {
 }
 
 kotlin {
-    androidLibrary {
+    android {
         namespace = "me.bitlinker.compose800.common"
         compileSdk = libs.versions.android.compileSdk.get().toInt()
 
@@ -60,10 +62,9 @@ kotlin {
 
     sourceSets {
         commonMain.dependencies {
-            implementation(compose.runtime)
-            implementation(compose.foundation)
-            implementation(compose.components.resources)
-            implementation(compose.foundation)
+            implementation(libs.compose.runtime)
+            implementation(libs.compose.foundation)
+            implementation(libs.compose.components.resources)
             implementation(libs.napier)
             implementation(libs.kotlinx.coroutines.core)
             implementation(libs.multiplatformSettings.core)
@@ -72,13 +73,13 @@ kotlin {
         }
 
         jvmMain.dependencies {
-            implementation(compose.desktop.common)
+            implementation(libs.compose.desktop)
             implementation(compose.desktop.currentOs)
             implementation(libs.kotlinx.coroutines.swing)
         }
 
         jsMain.dependencies {
-            implementation(compose.html.core)
+            implementation(libs.compose.html)
         }
 
         iosMain.dependencies {
@@ -93,7 +94,7 @@ compose.desktop {
         nativeDistributions {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
             packageName = "me.bitlinker.compose800.desktopApp"
-            packageVersion = "1.0.0"
+            packageVersion = version.toString()
         }
     }
 }
