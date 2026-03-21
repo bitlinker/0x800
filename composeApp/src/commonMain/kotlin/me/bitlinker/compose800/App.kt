@@ -11,7 +11,7 @@ import me.bitlinker.compose800.ui.presentation.GameViewStateMapper
 import me.bitlinker.compose800.ui.theme.Theme
 
 @Composable
-internal fun App(
+fun App(
     // Override on android only; other platforms have no save state
     stateKeeper: StateKeeper = StateKeeperDispatcher(),
 ) {

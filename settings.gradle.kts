@@ -1,5 +1,6 @@
 rootProject.name = "game0x800"
 include(":composeApp")
+include(":androidApp")
 
 pluginManagement {
     repositories {

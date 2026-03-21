@@ -1,4 +1,4 @@
-package me.bitlinker.compose800
+package me.bitlinker.compose800.android
 
 import App
 import android.graphics.Color
