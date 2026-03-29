@@ -94,7 +94,7 @@ internal class Game(
                         mergedFromIds = lastResult.id to cell.id
                     )
                     isLastCellMerged = true
-                    resultCells.removeLast()
+                    resultCells.removeAt(resultCells.lastIndex)
                     resultCells.add(newCell)
                     score += newCell.value.pow2Of()
                     if (newCell.value == gameConfig.winValue) {
