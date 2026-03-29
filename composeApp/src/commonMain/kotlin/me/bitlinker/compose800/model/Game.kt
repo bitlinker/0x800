@@ -1,5 +1,6 @@
 package me.bitlinker.compose800.model
 
+import androidx.annotation.FloatRange
 import kotlinx.serialization.Serializable
 import kotlin.random.Random
 
@@ -7,7 +8,10 @@ import kotlin.random.Random
 internal data class GameConfig(
     val size: Vec2 = Vec2(4, 4),
     val initialCells: Int = 2,
-    val newCellValueFactory: (random: Float) -> Int = { random -> if (random < 0.9F) 1 else 2 },
+    val newCellValuesProbabilities: List<Pair<OpenEndRange<Float>, Int>> = listOf(
+        0F..<0.9F to 1,
+        0.9F..<1F to 2,
+    ),
     val winValue: Int = 11,
 ) {
     init {
@@ -47,10 +51,18 @@ internal class Game(
         }
     }
 
+    private fun getNextValue(): Int {
+        val random = Random.nextFloat()
+        gameConfig.newCellValuesProbabilities.forEach { (range, value) ->
+            if (random in range) return value
+        }
+        throw IllegalStateException("Wrong newCellValuesProbabilities range: $gameConfig.newCellValuesProbabilities")
+    }
+
     private fun spawn() {
         val pos = field.randomEmptyCellPosition()
         require(pos != null)
-        val cell = cellFactory.create(gameConfig.newCellValueFactory(Random.nextFloat()))
+        val cell = cellFactory.create(getNextValue())
         field[pos] = cell
     }
 
