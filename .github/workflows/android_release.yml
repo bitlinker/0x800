@@ -28,14 +28,14 @@ jobs:
       uses: actions/upload-artifact@v4.3.1
       with:
         name: release unsigned APK
-        path: composeApp/build/outputs/apk/release/*.apk
+        path: androidApp/build/outputs/apk/release/*.apk
         if-no-files-found: error
         
     - name: Upload AAB
       uses: actions/upload-artifact@v4.3.1
       with:
         name: release unsigned AAB
-        path: composeApp/build/outputs/bundle/release/*.aab
+        path: androidApp/build/outputs/bundle/release/*.aab
         if-no-files-found: error
 
       
