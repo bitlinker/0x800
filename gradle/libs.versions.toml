@@ -15,7 +15,7 @@ essenty = "2.5.0"
 buildKonfig = "0.17.1"
 
 appGroup = "me.bitlinker.compose800"
-appVersion = "1.0.3"
+appVersion = "1.1.0"
 
 [libraries]
 androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "androidx-appcompat" }
