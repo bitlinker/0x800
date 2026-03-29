@@ -40,8 +40,6 @@ import org.jetbrains.compose.resources.stringResource
 internal fun GameScreen(state: GameViewState, dispatcher: (GameAction) -> Unit) {
     BoxWithConstraints(
         modifier = Modifier
-            .listenDirectionDrags { dispatcher(GameAction.Move(it)) }
-            .listenDirectionKeys { dispatcher(GameAction.Move(it)) }
             .fillMaxSize()
             .background(ThemeColors.current.frameBackground)
             .safeDrawingPadding()
@@ -64,7 +62,10 @@ private fun PortraitScreen(state: GameViewState, dispatcher: (GameAction) -> Uni
         Spacer(Modifier.weight(1F))
         PortraitHeader(state.score, dispatcher)
         Spacer(Modifier.height(Dimens.paddingLarge))
-        GameFieldView(state.field)
+        GameFieldView(
+            field = state.field,
+            dispatcher = dispatcher
+        )
         Spacer(Modifier.weight(1F))
     }
 }
@@ -82,7 +83,10 @@ private fun LandscapeScreen(state: GameViewState, dispatcher: (GameAction) -> Un
             contentAlignment = Alignment.Center,
             modifier = Modifier.fillMaxHeight()
         ) {
-            GameFieldView(field = state.field)
+            GameFieldView(
+                field = state.field,
+                dispatcher = dispatcher,
+            )
         }
     }
 }

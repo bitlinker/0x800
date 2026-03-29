@@ -1,6 +1,5 @@
 package me.bitlinker.compose800.model
 
-import androidx.annotation.FloatRange
 import kotlinx.serialization.Serializable
 import kotlin.random.Random
 
