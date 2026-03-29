@@ -5,15 +5,21 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.runtime.remember
+import me.bitlinker.compose800.repository.ThemeSetting
 
 internal val ThemeColors = compositionLocalOf { Colors.forTheme(false) }
 
 @Composable
 internal fun Theme(
-    content: @Composable () -> Unit
+    themeSetting: ThemeSetting,
+    content: @Composable () -> Unit,
 ) {
-    val systemIsDark = isSystemInDarkTheme()
-    val colors = remember { Colors.forTheme(systemIsDark) }
+    val isDark = when (themeSetting) {
+        ThemeSetting.Auto -> isSystemInDarkTheme()
+        ThemeSetting.Light -> false
+        ThemeSetting.Dark -> true
+    }
+    val colors = remember(isDark) { Colors.forTheme(isDark) }
     CompositionLocalProvider(
         ThemeColors provides colors
     ) {

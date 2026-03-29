@@ -21,6 +21,7 @@ internal interface Colors {
     val scoreBackground: Color
 
     val buttonBackground: Color
+    val buttonSelectedBackground: Color
     val buttonLabel: Color
 
     val cellColors: List<Pair<Color, Color>>
@@ -46,6 +47,7 @@ private data object LightColors : Colors {
     override val scoreBackground: Color = Color(0xFFBBADA0)
 
     override val buttonBackground: Color = Color(0xFF8F7A66)
+    override val buttonSelectedBackground: Color = Color(0xFFFF9060)
     override val buttonLabel: Color = Color(0xFFF9F6F2)
 
     private val textDarkColor = Color(0XFF786F66)
@@ -79,6 +81,7 @@ private data object DarkColors : Colors {
     override val scoreBackground: Color = Color(0XFF43515F)
 
     override val buttonBackground: Color = Color(0XFF70859A)
+    override val buttonSelectedBackground: Color = Color(0xFF006B9A)
     override val buttonLabel: Color = Color(0XFF04090C)
 
     private val textDarkColor = Color(0XFF868F9A)

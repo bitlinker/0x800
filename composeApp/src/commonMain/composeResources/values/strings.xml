@@ -1,9 +1,18 @@
 <resources>
-    <string name="text_app_title">0x800</string>
-    <string name="text_score_title">Score</string>
-    <string name="text_highscore_title">Best</string>
-    <string name="button_new_game_title">New game</string>
-    <string name="text_game_description">Join the numbers and\nget to the **0x800 title!**</string>
-    <string name="text_game_over">Game over!</string>
-    <string name="text_game_win">You win!</string>
+    <string name="game_text_app_title">0x800</string>
+    <string name="game_text_score_title">Score</string>
+    <string name="game_text_highscore_title">Best</string>
+    <string name="game_button_new_game_title">New game</string>
+    <string name="game_text_game_description">Join the numbers and\nget to the **0x800 title!**</string>
+    <string name="game_completed_text_game_over">Game over!</string>
+    <string name="game_completed_text_game_win">You win!</string>
+    <string name="settings_title">Settings</string>
+    <string name="settings_theme_title">Theme:</string>
+    <string name="settings_theme_auto_title">Auto</string>
+    <string name="settings_theme_light_title">Light</string>
+    <string name="settings_theme_dark_title">Dark</string>
+    <string name="settings_about_title">About:</string>
+    <string name="settings_privacy_policy_title">Privacy policy</string>
+    <string name="settings_sources_title">Source code</string>
+    <string name="settings_version_title" formatted="false">Version: %1$s</string>
 </resources>

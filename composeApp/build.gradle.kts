@@ -4,8 +4,10 @@ import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpackConfig
+import com.codingfeline.buildkonfig.compiler.FieldSpec.Type.STRING
+import com.codingfeline.buildkonfig.compiler.FieldSpec.Type.BOOLEAN
 
-version = "1.0.3"
+group = libs.versions.appGroup.get()
 
 plugins {
     alias(libs.plugins.multiplatform)
@@ -13,11 +15,12 @@ plugins {
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.android.multiplatform.library)
     alias(libs.plugins.kotlinx.serialization)
+    alias(libs.plugins.buildKonfig)
 }
 
 kotlin {
     android {
-        namespace = "me.bitlinker.compose800.common"
+        namespace = "${libs.versions.appGroup.get()}.common"
         compileSdk = libs.versions.android.compileSdk.get().toInt()
 
         compilerOptions {
@@ -30,11 +33,6 @@ kotlin {
     }
 
     jvm()
-
-    js {
-        browser()
-        binaries.executable()
-    }
 
     wasmJs {
         outputModuleName = "composeApp"
@@ -68,7 +66,8 @@ kotlin {
             implementation(libs.napier)
             implementation(libs.kotlinx.coroutines.core)
             implementation(libs.multiplatformSettings.core)
-            implementation(libs.multiplatformSettings.noarg)
+            implementation(libs.multiplatformSettings.coroutines)
+            implementation(libs.multiplatformSettings.makeObservable)
             implementation(libs.essenty.stateKeeper)
         }
 
@@ -78,12 +77,15 @@ kotlin {
             implementation(libs.kotlinx.coroutines.swing)
         }
 
-        jsMain.dependencies {
-            implementation(libs.compose.html)
+        wasmJsMain.dependencies {
         }
 
         iosMain.dependencies {
         }
+    }
+
+    compilerOptions {
+        optIn.add("com.russhwolf.settings.ExperimentalSettingsApi")
     }
 }
 
@@ -93,8 +95,37 @@ compose.desktop {
 
         nativeDistributions {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
-            packageName = "me.bitlinker.compose800.desktopApp"
-            packageVersion = version.toString()
+            packageName = "${libs.versions.appGroup.get()}.desktopApp"
+            packageVersion = libs.versions.appVersion.get()
         }
+    }
+}
+
+buildkonfig {
+    packageName = libs.versions.appGroup.get()
+
+    defaultConfigs {
+        buildConfigField(
+            type = STRING,
+            name = "version",
+            value = libs.versions.appVersion.get()
+        )
+        buildConfigField(
+            type = STRING,
+            name = "github",
+            value = "https://github.com/bitlinker/0x800"
+        )
+        buildConfigField(
+            type = STRING,
+            name = "privacyPolicyUrl",
+            value = "https://github.com/bitlinker/0x800/blob/main/privacy_policy.md"
+        )
+
+        val isDebug: String by project.extra
+        buildConfigField(
+            type = BOOLEAN,
+            name = "isDebug",
+            value = isDebug,
+        )
     }
 }

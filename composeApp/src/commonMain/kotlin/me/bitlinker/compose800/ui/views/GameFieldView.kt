@@ -23,7 +23,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.toSize
 import me.bitlinker.compose800.model.Cell
 import me.bitlinker.compose800.model.CellId
-import me.bitlinker.compose800.ui.GameViewState
+import me.bitlinker.compose800.ui.screens.game.GameViewState
 import me.bitlinker.compose800.ui.theme.Dimens
 import me.bitlinker.compose800.ui.theme.ThemeColors
 

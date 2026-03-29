@@ -1,8 +1,17 @@
 <resources>
-    <string name="text_score_title">Очки</string>
-    <string name="text_highscore_title">Лучшие</string>
-    <string name="button_new_game_title">Новая игра</string>
-    <string name="text_game_description">Соединяйте плитки, чтобы\nполучить число **0x800!**</string>
-    <string name="text_game_over">Потрачено!</string>
-    <string name="text_game_win">Вы победили!</string>
+    <string name="game_text_score_title">Очки</string>
+    <string name="game_text_highscore_title">Лучшие</string>
+    <string name="game_button_new_game_title">Новая игра</string>
+    <string name="game_text_game_description">Соединяйте плитки, чтобы\nполучить число **0x800!**</string>
+    <string name="game_completed_text_game_over">Потрачено!</string>
+    <string name="game_completed_text_game_win">Вы победили!</string>
+    <string name="settings_title">Настройки</string>
+    <string name="settings_theme_title">Тема:</string>
+    <string name="settings_theme_auto_title">Авто</string>
+    <string name="settings_theme_light_title">Светлая</string>
+    <string name="settings_theme_dark_title">Темная</string>
+    <string name="settings_about_title">О программе:</string>
+    <string name="settings_privacy_policy_title">Политика конфиденциальности</string>
+    <string name="settings_sources_title">Исходный код</string>
+    <string name="settings_version_title" formatted="false">Версия: %1$s</string>
 </resources>

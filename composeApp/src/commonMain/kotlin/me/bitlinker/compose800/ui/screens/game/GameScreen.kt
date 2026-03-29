@@ -1,8 +1,5 @@
-package me.bitlinker.compose800.ui
+package me.bitlinker.compose800.ui.screens.game
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -24,25 +21,18 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Alignment.Companion.Top
 import androidx.compose.ui.Modifier
-import game0x800.composeapp.generated.resources.Res
-import game0x800.composeapp.generated.resources.button_new_game_title
-import game0x800.composeapp.generated.resources.text_app_title
-import game0x800.composeapp.generated.resources.text_game_description
-import game0x800.composeapp.generated.resources.text_game_over
-import game0x800.composeapp.generated.resources.text_game_win
-import game0x800.composeapp.generated.resources.text_highscore_title
-import game0x800.composeapp.generated.resources.text_score_title
-import me.bitlinker.compose800.model.GameState
+import me.bitlinker.compose800.composeapp.generated.resources.*
 import me.bitlinker.compose800.ui.modifiers.listenDirectionDrags
 import me.bitlinker.compose800.ui.modifiers.listenDirectionKeys
 import me.bitlinker.compose800.ui.theme.Dimens
 import me.bitlinker.compose800.ui.theme.TextStyles
 import me.bitlinker.compose800.ui.theme.ThemeColors
 import me.bitlinker.compose800.ui.utils.parseMarkdownToAnnotatedString
-import me.bitlinker.compose800.ui.views.ButtonView
-import me.bitlinker.compose800.ui.views.GameCompletedOverlayView
+import me.bitlinker.compose800.ui.views.TextButtonView
 import me.bitlinker.compose800.ui.views.GameFieldView
+import me.bitlinker.compose800.ui.views.IconButtonView
 import me.bitlinker.compose800.ui.views.ScoreView
+import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 
 
@@ -62,7 +52,6 @@ internal fun GameScreen(state: GameViewState, dispatcher: (GameAction) -> Unit) 
         } else {
             LandscapeScreen(state, dispatcher)
         }
-        OptionalGameCompletedOverlay(state.state, dispatcher)
     }
 }
 
@@ -124,6 +113,8 @@ private fun PortraitHeader(
             Description()
             Spacer(Modifier.weight(1F))
             NewGameButton(dispatcher)
+            Spacer(Modifier.width(Dimens.paddingExtraSmall))
+            SettingsButton(dispatcher)
         }
     }
 }
@@ -140,7 +131,10 @@ private fun LandscapeHeader(
             CurrentScore(state.score)
             HighScore(state.score)
         }
-        NewGameButton(dispatcher)
+        Row(horizontalArrangement = Arrangement.spacedBy(Dimens.paddingExtraSmall)) {
+            NewGameButton(dispatcher)
+            SettingsButton(dispatcher)
+        }
     }
 }
 
@@ -148,7 +142,7 @@ private fun LandscapeHeader(
 private fun Title() {
     val colors = ThemeColors.current
     BasicText(
-        text = stringResource(Res.string.text_app_title),
+        text = stringResource(Res.string.game_text_app_title),
         style = TextStyles.titleTextStyle,
         color = { colors.titleLabel }
     )
@@ -157,7 +151,7 @@ private fun Title() {
 @Composable
 private fun CurrentScore(score: GameViewState.Score) {
     ScoreView(
-        text = stringResource(Res.string.text_score_title),
+        text = stringResource(Res.string.game_text_score_title),
         value = score.current,
         addValue = score.add,
         modifier = Modifier
@@ -167,7 +161,7 @@ private fun CurrentScore(score: GameViewState.Score) {
 @Composable
 private fun HighScore(score: GameViewState.Score) {
     ScoreView(
-        text = stringResource(Res.string.text_highscore_title),
+        text = stringResource(Res.string.game_text_highscore_title),
         value = score.high,
         addValue = 0,
         modifier = Modifier
@@ -176,15 +170,23 @@ private fun HighScore(score: GameViewState.Score) {
 
 @Composable
 private fun NewGameButton(dispatcher: (GameAction) -> Unit) {
-    ButtonView(stringResource(Res.string.button_new_game_title)) {
-        dispatcher(GameAction.NewGame)
+    TextButtonView(stringResource(Res.string.game_button_new_game_title)) {
+        dispatcher(GameAction.NewGameClicked)
     }
+}
+
+@Composable
+private fun SettingsButton(dispatcher: (GameAction) -> Unit) {
+    IconButtonView(
+        painterResource(Res.drawable.settings_16px),
+        onClick = { dispatcher(GameAction.SettingsClicked) },
+    )
 }
 
 @Composable
 private fun Description() {
     val colors = ThemeColors.current
-    val text = stringResource(Res.string.text_game_description)
+    val text = stringResource(Res.string.game_text_game_description)
     val annotatedString = remember { text.parseMarkdownToAnnotatedString() }
     BasicText(
         text = annotatedString,
@@ -193,21 +195,3 @@ private fun Description() {
     )
 }
 
-@Composable
-private fun OptionalGameCompletedOverlay(state: GameState, dispatcher: (GameAction) -> Unit) {
-    val stateString = when (state) {
-        GameState.Win -> stringResource(Res.string.text_game_win)
-        GameState.Loose -> stringResource(Res.string.text_game_over)
-        GameState.Normal -> null
-    }
-    AnimatedVisibility(
-        visible = stateString != null,
-        enter = fadeIn(),
-        exit = fadeOut(),
-    ) {
-        val string = remember { stateString!! }
-        GameCompletedOverlayView(
-            text = string,
-            onNewGameClick = { dispatcher(GameAction.NewGame) })
-    }
-}

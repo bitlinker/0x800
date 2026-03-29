@@ -1,4 +1,4 @@
-package me.bitlinker.compose800.ui.views
+package me.bitlinker.compose800.ui.screens.game_completed
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -10,15 +10,23 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
-import game0x800.composeapp.generated.resources.Res
-import game0x800.composeapp.generated.resources.button_new_game_title
+import me.bitlinker.compose800.composeapp.generated.resources.*
+import me.bitlinker.compose800.model.GameState
 import me.bitlinker.compose800.ui.theme.Dimens
 import me.bitlinker.compose800.ui.theme.TextStyles
 import me.bitlinker.compose800.ui.theme.ThemeColors
+import me.bitlinker.compose800.ui.views.TextButtonView
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
-internal fun GameCompletedOverlayView(text: String, onNewGameClick: () -> Unit) {
+internal fun GameCompletedDialogScreen(viewModel: GameCompletedViewModel) {
+
+    val text = when (viewModel.state) {
+        GameState.Win -> stringResource(Res.string.game_completed_text_game_win)
+        GameState.Loose -> stringResource(Res.string.game_completed_text_game_over)
+        GameState.Normal -> return
+    }
+
     val colors = ThemeColors.current
     Box(
         contentAlignment = Alignment.Center,
@@ -39,9 +47,9 @@ internal fun GameCompletedOverlayView(text: String, onNewGameClick: () -> Unit) 
                 style = TextStyles.titleTextStyle,
                 color = { colors.titleLabel }
             )
-            ButtonView(
-                text = stringResource(Res.string.button_new_game_title),
-                onClick = onNewGameClick,
+            TextButtonView(
+                text = stringResource(Res.string.game_button_new_game_title),
+                onClick = { viewModel.dispatch(GameCompletedAction.NewGameClicked) },
             )
         }
     }

@@ -14,6 +14,7 @@ kotlin {
         implementation(libs.kotlinx.coroutines.android)
         implementation(libs.napier)
         implementation(libs.essenty.stateKeeper)
+        implementation(libs.multiplatformSettings.core)
         implementation(projects.composeApp)
     }
 
@@ -24,17 +25,26 @@ kotlin {
     }
 }
 
+private fun versionToCode(version: String): Int {
+    return version
+        .split('.')
+        .map { it.toInt() }
+        .fold(0) { acc, cur ->
+            acc * 100 + cur
+        }
+}
+
 android {
-    namespace = "me.bitlinker.compose800"
+    namespace = libs.versions.appGroup.get()
     compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     defaultConfig {
         minSdk = libs.versions.android.minSdk.get().toInt()
         targetSdk = libs.versions.android.targetSdk.get().toInt()
 
-        applicationId = "me.bitlinker.compose800.androidApp"
-        versionCode = 3
-        versionName = projects.composeApp.version
+        applicationId = "${libs.versions.appGroup.get()}.androidApp"
+        versionCode = versionToCode(libs.versions.appVersion.get())
+        versionName = libs.versions.appVersion.get()
     }
 
     compileOptions {

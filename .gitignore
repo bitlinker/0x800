@@ -1,4 +1,3 @@
-
 *.iml
 .gradle
 .idea
@@ -14,3 +13,4 @@ xcuserdata/
 Pods/
 *.jks
 *yarn.lock
+sign.txt

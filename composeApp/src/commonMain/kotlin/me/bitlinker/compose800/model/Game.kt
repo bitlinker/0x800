@@ -7,7 +7,7 @@ import kotlin.random.Random
 internal data class GameConfig(
     val size: Vec2 = Vec2(4, 4),
     val initialCells: Int = 2,
-    val newCellValueFactory: () -> Int = { if (Random.nextFloat() < 0.9F) 1 else 2 },
+    val newCellValueFactory: (random: Float) -> Int = { random -> if (random < 0.9F) 1 else 2 },
     val winValue: Int = 11,
 ) {
     init {
@@ -42,7 +42,7 @@ internal class Game(
     }
 
     private fun initialSpawn() {
-        for (i in 0 until gameConfig.initialCells) {
+        repeat(gameConfig.initialCells) {
             spawn()
         }
     }
@@ -50,18 +50,20 @@ internal class Game(
     private fun spawn() {
         val pos = field.randomEmptyCellPosition()
         require(pos != null)
-        val cell = cellFactory.create(gameConfig.newCellValueFactory())
+        val cell = cellFactory.create(gameConfig.newCellValueFactory(Random.nextFloat()))
         field[pos] = cell
     }
 
     fun update(direction: Direction): Boolean {
         if (gameState != GameState.Normal) return false
+
+        val isChanged = field.updateRowsInDirection(direction)
+
         if (field.countEmptyCells() == 0) {
             gameState = GameState.Loose
             return true
         }
 
-        val isChanged = field.updateRowsInDirection(direction)
         if (isChanged) {
             spawn()
         }
